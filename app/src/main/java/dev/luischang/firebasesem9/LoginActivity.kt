@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
                             findViewById(android.R.id.content),
                             "Authentication success.",
                             Snackbar.LENGTH_SHORT).show()
-                        startActivity(Intent(this, MainActivity::class.java))
+                        startActivity(Intent(this, PrincipalActivity::class.java))
                     }else {
                         // If sign in fails, display a message to the user.
                         //Message in snackbar
