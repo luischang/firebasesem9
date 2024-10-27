@@ -3,4 +3,10 @@
     <string name="valbtlogin">LOGIN</string>
     <string name="valetemaillogin">Enter email</string>
     <string name="valetpassworllogin">Enter password</string>
+    <string name="valetfullname">Enter fullname</string>
+    <string name="valetcountry">Enter country</string>
+    <string name="valetemail">Enter email</string>
+    <string name="valetpassword">Enter password</string>
+    <string name="valbtsaveregister">SAVE</string>
+    <string name="valbtregister">REGISTER</string>
 </resources>
