@@ -1,13 +1,18 @@
 package dev.luischang.firebasesem9.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
+import dev.luischang.firebasesem9.adapter.ProductAdapter
 import dev.luischang.firebasesem9.databinding.FragmentHomeBinding
+import dev.luischang.firebasesem9.model.ProductModel
 
 class HomeFragment : Fragment() {
 
@@ -22,16 +27,29 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        val db = FirebaseFirestore.getInstance()
+        val rvProduct = binding.rvProduct
+        var lstProducts : List<ProductModel>
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        db.collection("products")
+            .addSnapshotListener { value, error ->
+                if(error != null){
+                    Log.e("Firestore Error", error.message.toString())
+                    return@addSnapshotListener
+                }
+
+                lstProducts = value!!.documents.map {document ->
+                    ProductModel(
+                        document["name"].toString(),
+                        document["price"].toString(),
+                        document["stock"].toString(),
+                        document["imageUrl"].toString())
+                }
+                rvProduct.adapter = ProductAdapter(lstProducts)
+                rvProduct.layoutManager = LinearLayoutManager(requireContext())
+            }
         return root
     }
 

@@ -57,4 +57,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+    //Add Picasso (no libs)
+    implementation("com.squareup.picasso:picasso:2.8")
+
 }
