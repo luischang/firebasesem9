@@ -1,13 +1,20 @@
 package dev.luischang.firebasesem9.ui.gallery
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dev.luischang.firebasesem9.database.CustomerEntity
+import dev.luischang.firebasesem9.database.CustomerRepository
 
-class GalleryViewModel : ViewModel() {
+class GalleryViewModel (application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
+    private var repository = CustomerRepository(application)
+    val customers = repository.getCustomers()
+
+    fun saveCustomer(customerEntity: CustomerEntity){
+        repository.insert(customerEntity)
     }
-    val text: LiveData<String> = _text
+
 }

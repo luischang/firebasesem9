@@ -4,39 +4,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import dev.luischang.firebasesem9.R
+import dev.luischang.firebasesem9.database.CustomerEntity
 import dev.luischang.firebasesem9.databinding.FragmentGalleryBinding
 
 class GalleryFragment : Fragment() {
 
-    private var _binding: FragmentGalleryBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var viewModel: GalleryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val galleryViewModel =
-            ViewModelProvider(this).get(GalleryViewModel::class.java)
+        val view: View = inflater.inflate(R.layout.fragment_gallery, container, false)
 
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val etFirstName: EditText = view.findViewById(R.id.etFirstName)
+        val etLastName: EditText = view.findViewById(R.id.etLastName)
+        val etPhoneNumber: EditText = view.findViewById(R.id.etPhoneNumber)
+        val btSaveCustomer: Button = view.findViewById(R.id.btSaveCustomer)
 
-        val textView: TextView = binding.textGallery
-        galleryViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        viewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
+
+        btSaveCustomer.setOnClickListener {
+            val customerEntity = CustomerEntity(etFirstName.text.toString()
+                                    , etLastName.text.toString()
+                                    , etPhoneNumber.text.toString())
+
+            viewModel.saveCustomer(customerEntity)
         }
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        return view
     }
 }

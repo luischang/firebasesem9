@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
 }
 
 android {
@@ -59,5 +60,14 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     //Add Picasso (no libs)
     implementation("com.squareup.picasso:picasso:2.8")
+    //Add Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    //Add Room (sqlite)
+    implementation("androidx.room:room-runtime:2.6.0")
+    kapt("androidx.room:room-compiler:2.6.0")
+    implementation("androidx.room:room-ktx:2.6.0")
+
+
 
 }
