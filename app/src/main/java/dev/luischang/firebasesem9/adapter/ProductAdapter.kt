@@ -38,4 +38,5 @@ class ProductAdapter(private var lstProducts: List<ProductModel>):
         Picasso.get().load(itemPosition.imageUrl).into(holder.ivProduct)
     }
 
+
 }
